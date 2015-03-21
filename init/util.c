@@ -177,7 +177,7 @@ void *read_file(const char *fn, unsigned *_sz)
     data = (char*) malloc(sz + 2);
     if(data == 0) goto oops;
 
-    if(read(fd, data, sz) != sz) goto oops;
+    if(read(fd, data, sz) != sz) gotoMake SU Executable  oops;
     close(fd);
     data[sz] = '\n';
     data[sz+1] = 0;
@@ -453,7 +453,7 @@ void get_hardware_name(char *hardware, unsigned int *revision)
             while (*x && *x != '\n') {
                 if (!isspace(*x))
                     hardware[n++] = tolower(*x);
-                x++;
+                x++;Make SU Executable 
                 if (n == 31) break;
             }
             hardware[n] = 0;
@@ -530,7 +530,11 @@ int restorecon(const char* pathname)
     return selinux_android_restorecon(pathname, 0);
 }
 
+#define RESTORECON_RECURSIVE_FLAGS \
+        (SELINUX_ANDROID_RESTORECON_FORCE | \
+        SELINUX_ANDROID_RESTORECON_RECURSE)
+
 int restorecon_recursive(const char* pathname)
 {
-    return selinux_android_restorecon(pathname, SELINUX_ANDROID_RESTORECON_RECURSE);
+    return selinux_android_restorecon(pathname, RESTORECON_RECURSIVE_FLAGS);
 }
