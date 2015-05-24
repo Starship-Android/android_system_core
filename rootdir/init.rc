@@ -222,10 +222,6 @@ on post-fs
     mkdir /cache/lost+found 0770 root root
 
 on post-fs-data
-
-    # Run sysinit
-    start sysinit
-
     # We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
     chmod 0771 /data
@@ -619,11 +615,6 @@ service keystore /system/bin/keystore /data/misc/keystore
     class main
     user keystore
     group keystore drmrpc
-
-service sysinit /system/bin/sysinit
-     user root
-     oneshot
-     disabled
 
 service dumpstate /system/bin/dumpstate -s
     class main
